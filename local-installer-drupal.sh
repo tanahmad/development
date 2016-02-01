@@ -7,21 +7,19 @@ if [ "$(id -u)" != "0" ]; then
    exit 1
 fi
 
-PROJECT=$1
-CHECKOUT=$2
-LOCALPROJECT=$3
-DRUPALV=$4
-DUSER=$5
-DPASS=$6
-DBNAME=$7
-DBUSER=$8
-DBPASS=$9
+CHECKOUT=$1
+LOCALPROJECT=$2
+DRUPALV=$3
+DUSER=$4
+DPASS=$5
+DBNAME=$6
+DBUSER=$7
+DBPASS=$8
 
-if [[ -z $PROJECT ||  -z $CHECKOUT || -z $LOCALPROJECT || -z $DRUPALV || -z $DUSER || -z $DPASS || -z $DBNAME || -z $DBUSER || -z $DBPASS ]];
+if [[ -z $CHECKOUT || -z $LOCALPROJECT || -z $DRUPALV || -z $DUSER || -z $DPASS || -z $DBNAME || -z $DBUSER || -z $DBPASS ]];
 
   then
-    echo -e "\e[00;31mPlease Provide Project Name\e[00m"
-    echo -e "\e[00;31mPlease Provide a folder to check out the project (example: /home/you/websites/customprojects/) as 8th variable\e[00m"
+    echo -e "\e[00;31mPlease Provide a folder to check out the project (example: /var/www/) as 1st variable\e[00m"
     echo -e "\e[00;31mPlease Provide Site Name inside CheckOut Folder\e[00m"
     echo -e "\e[00;31mPlease Provide DRUPAL Version (e-g 7.23)\e[00m"
     echo -e "\e[00;31mPlease Provide Drupal User\e[00m"
@@ -29,7 +27,7 @@ if [[ -z $PROJECT ||  -z $CHECKOUT || -z $LOCALPROJECT || -z $DRUPALV || -z $DUS
     echo -e "\e[00;31mPlease Provide DB NAME\e[00m"
     echo -e "\e[00;31mPlease Provide DB USER\e[00m"
     echo -e "\e[00;31mPlease Provide DB PASS\e[00m"
-    echo -e "\e[00;31mLike ./local-installer-drupal.sh dev.mango.com /var/www/ dev.mango.com 7.31 admin admin007 dev_mango_com [DBUSER] [DBPASS]\e[00m"
+    echo -e "\e[00;31mLike ./local-installer-drupal.sh /var/www/ dev.mango.com 7.31 admin admin007 [DB_NAME] [DBUSER] [DBPASS]\e[00m"
     exit
   else
    echo '**********************************************************************************************************************************'
@@ -39,9 +37,7 @@ if [[ -z $PROJECT ||  -z $CHECKOUT || -z $LOCALPROJECT || -z $DRUPALV || -z $DUS
 fi
 
 
-#git clone [username]@92.243.15.236:/var/repositories/customprojects/project project.local
 if [ ! -d $CHECKOUT$LOCALPROJECT ]; then
-  #git clone $USERNAME@92.243.15.236:/var/repositories/$TYPE/$PROJECT $CHECKOUT$LOCALPROJECT
   mkdir $CHECKOUT$LOCALPROJECT
   echo -e "\e[00;32m Directory Created $CHECKOUT$LOCALPROJECT  \e[00m"
   cd $CHECKOUT$LOCALPROJECT
@@ -90,9 +86,9 @@ echo "
       Order allow,deny
       allow from all
     </Directory>
-  </VirtualHost>" > $APACHEFOLDER/sites-available/$PROJECT.conf
-#chown $LOCALUSERGROUP $APACHEFOLDER/nodeex-conf/$PROJECT.conf
-echo -e "\e[00;32mAdded local vhost conf to $APACHEFOLDER/sites-available/$PROJECT.conf \e[00m"
+  </VirtualHost>" > $APACHEFOLDER/sites-available/$LOCALPROJECT.conf
+#chown $LOCALUSERGROUP $APACHEFOLDER/nodeex-conf/$LOCALPROJECT.conf
+echo -e "\e[00;32mAdded local vhost conf to $APACHEFOLDER/sites-available/$LOCALPROJECT.conf \e[00m"
 
 #Create apachehosts file
 
